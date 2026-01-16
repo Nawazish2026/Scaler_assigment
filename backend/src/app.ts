@@ -9,8 +9,16 @@ import meetingRoutes from './routes/meetingRoutes';
 
 const app = express();
 
+// CORS Configuration - Allow frontend origins
+const corsOptions = {
+  origin: process.env.FRONTEND_URL || '*', // Allow all in dev, specific domain in prod
+  methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
+};
+
 // Middleware
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 // Routes

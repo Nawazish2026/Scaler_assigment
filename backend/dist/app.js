@@ -11,8 +11,15 @@ const availabilityRoutes_1 = __importDefault(require("./routes/availabilityRoute
 const bookingRoutes_1 = __importDefault(require("./routes/bookingRoutes"));
 const meetingRoutes_1 = __importDefault(require("./routes/meetingRoutes"));
 const app = (0, express_1.default)();
+// CORS Configuration - Allow frontend origins
+const corsOptions = {
+    origin: process.env.FRONTEND_URL || '*', // Allow all in dev, specific domain in prod
+    methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true,
+};
 // Middleware
-app.use((0, cors_1.default)());
+app.use((0, cors_1.default)(corsOptions));
 app.use(express_1.default.json());
 // Routes
 app.get('/api/health', (req, res) => {
