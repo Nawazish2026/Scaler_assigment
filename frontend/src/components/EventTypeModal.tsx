@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { X, ChevronDown, Users, RotateCcw, UserPlus, Clock } from 'lucide-react';
+import { X, ChevronDown, Users, RotateCcw, UserPlus } from 'lucide-react';
 
 interface EventType {
   id?: string;
@@ -150,8 +150,8 @@ export default function EventTypeModal({ isOpen, onClose, onSubmit, initialData 
                   key={category.id}
                   onClick={() => selectCategory(category.id)}
                   className={`w-full p-4 text-left border rounded-xl transition-all hover:border-primary/50 hover:bg-primary/5 ${formData.eventCategory === category.id
-                      ? 'border-primary bg-primary/10'
-                      : 'border-border'
+                    ? 'border-primary bg-primary/10'
+                    : 'border-border'
                     }`}
                 >
                   <div className="flex items-start gap-3">
@@ -217,8 +217,8 @@ export default function EventTypeModal({ isOpen, onClose, onSubmit, initialData 
                         type="button"
                         onClick={() => handleDurationSelect(option.value)}
                         className={`w-full px-4 py-3 text-left hover:bg-primary/10 flex items-center justify-between ${formData.durationMinutes === option.value && !showCustomDuration
-                            ? 'bg-primary/10 text-primary'
-                            : 'text-text-primary'
+                          ? 'bg-primary/10 text-primary'
+                          : 'text-text-primary'
                           }`}
                       >
                         <span>{option.label}</span>

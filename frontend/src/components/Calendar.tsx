@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { ChevronLeft, ChevronRight } from 'lucide-react';
 import {
   format,
@@ -73,7 +73,7 @@ export default function Calendar({ selectedDate, onSelectDate, className }: Cale
       </div>
 
       <div className="grid grid-cols-7 gap-1">
-        {days.map((day, dayIdx) => {
+        {days.map((day, _dayIdx) => {
           const isSelected = selectedDate ? isSameDay(day, selectedDate) : false;
           const isCurrentMonth = isSameMonth(day, monthStart);
           const isDateToday = isToday(day);

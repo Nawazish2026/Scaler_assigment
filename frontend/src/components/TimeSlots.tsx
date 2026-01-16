@@ -10,7 +10,7 @@ interface TimeSlotsProps {
   onSelectSlot: (slot: string) => void;
 }
 
-export default function TimeSlots({ selectedDate, slots, loading, selectedSlot, onSelectSlot }: TimeSlotsProps) {
+export default function TimeSlots({ selectedDate: _selectedDate, slots, loading, selectedSlot, onSelectSlot }: TimeSlotsProps) {
   if (loading) {
     return (
       <div className="flex flex-col items-center justify-center p-8 space-y-3">
