@@ -1,136 +1,266 @@
-# Scheduling Platform
+# Scheduling Platform (Calendly Clone)
 
-A full-stack meeting scheduling application similar to Calendly, built with React, Node.js, Express, and PostgreSQL.
+A full-stack meeting scheduling & booking platform that replicates Calendly-like user experience.
+Users can create event types, define availability, and allow invitees to book public time slots.
+
+> Built for: **Scaler SDE Intern Fullstack Assignment (Calendly Clone)** :contentReference[oaicite:1]{index=1}
+
+---
+
+## Live Demo
+
+- Frontend (Vercel): 
+- Backend (render);
+
+---
+
+## Features
+
+### ✅ Core Features (Must Have)
+
+#### 1) Event Types Management
+- Create event types: name, duration, slug
+- Edit/delete event types
+- List all event types
+- Each event type has a unique public booking link
+
+#### 2) Availability Settings
+- Set available days (Mon-Sun)
+- Define time range per day (e.g. 9:00 AM - 5:00 PM)
+- Set timezone for schedule
+
+#### 3) Public Booking Page (`/book/:slug`)
+- Month calendar view to pick date
+- Displays available slots for selected date
+- Booking form: invitee name + email
+- Prevents double booking
+- Confirmation screen with meeting details
+
+#### 4) Meetings Page
+- Upcoming meetings view
+- Past meetings view
+- Cancel meeting flow
+
+---
 
 ## Tech Stack
 
-*   **Frontend**: React (Vite), TypeScript, Tailwind CSS, Lucide React, Date-fns.
-*   **Backend**: Node.js, Express, TypeScript, Prisma ORM.
-*   **Database**: PostgreSQL.
+### Frontend
+- React (Vite) + TypeScript
+- TailwindCSS
+- React Router
+- Date handling: date-fns
+- Calendar: react-day-picker
 
-## Prerequisites
+### Backend
+- Node.js + Express + TypeScript
+- Prisma ORM
 
-*   Node.js (v18 or higher)
-*   npm (v9 or higher)
-*   PostgreSQL running locally or via a cloud provider.
+### Database
+- PostgreSQL (local or cloud: Neon / Supabase / Railway)
 
-## Local Setup
-
-1.  **Clone the repository**
-    ```bash
-    git clone <repository_url>
-    cd scaler_assigment
-    ```
-
-2.  **Install dependencies**
-    ```bash
-    # Install root dependencies (for concurrency script)
-    npm install
-
-    # Install backend dependencies
-    cd backend
-    npm install
-
-    # Install frontend dependencies
-    cd ../frontend
-    npm install
-    
-    # Return to root
-    cd ..
-    ```
-
-3.  **Environment Variables**
-
-    *   **Backend**: Copy `.env.example` to `.env` in the `backend` directory.
-        ```bash
-        cd backend
-        cp .env.example .env
-        ```
-        Update `DATABASE_URL` with your PostgreSQL connection string.
-        Example: `DATABASE_URL="postgresql://user:password@localhost:5432/scheduling_db?schema=public"`
-
-    *   **Frontend**: Copy `.env.example` to `.env` in the `frontend` directory.
-        ```bash
-        cd frontend
-        cp .env.example .env
-        ```
-        Update `VITE_API_URL` if your backend runs on a port other than 3000.
-        Default: `VITE_API_URL="http://localhost:3000/api"`
-
-4.  **Database Setup**
-    Initialize the database and seed it with default data (User & Event Types).
-    ```bash
-    cd backend
-    npx prisma migrate dev --name init
-    npm run prisma:seed
-    ```
-
-5.  **Run the Application**
-    From the **root** directory, run:
-    ```bash
-    npm run dev
-    ```
-    This command uses `concurrently` to start both the backend (port 3000) and frontend (port 5173).
-
-    *   Frontend: [http://localhost:5173](http://localhost:5173)
-    *   Backend API: [http://localhost:3000](http://localhost:3000)
+---
 
 ## Project Structure
 
 ```
+
 scaler_assigment/
-├── backend/                # Node.js/Express backend
-│   ├── prisma/            # Database schema & seeds
-│   ├── src/               # Source code
-│   │   ├── controllers/   # Route controllers
-│   │   ├── routes/        # API routes
-│   │   └── lib/           # Utilities (Prisma client)
-├── frontend/               # React frontend
-│   ├── src/               # Source code
-│   │   ├── components/    # Reusable components
-│   │   ├── pages/         # Page components
-│   │   └── lib/           # Utilities (API, class names)
-└── package.json            # Root configuration for concurrent execution
+├── backend/
+│   ├── prisma/
+│   ├── src/
+│   │   ├── controllers/
+│   │   ├── routes/
+│   │   └── lib/
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   └── lib/
+└── package.json
+
+````
+
+---
+
+## Local Setup
+
+### 1) Clone repository
+```bash
+git clone <repo-url>
+cd scaler_assigment
+````
+
+### 2) Install dependencies
+
+```bash
+npm install
+
+cd backend
+npm install
+
+cd ../frontend
+npm install
+
+cd ..
 ```
 
-## Deployment Guide (Vercel)
+---
 
-### Prerequisites
-- GitHub repository with this code
-- Vercel account (free tier works)
-- Cloud PostgreSQL database (Supabase, Neon, or Railway - all have free tiers)
+## Environment Variables
 
-### Step 1: Set Up Cloud Database
-1. Create an account on [Supabase](https://supabase.com), [Neon](https://neon.tech), or [Railway](https://railway.app)
-2. Create a new PostgreSQL database
-3. Copy the connection string (it looks like: `postgresql://user:pass@host:5432/dbname`)
+### Backend
 
-### Step 2: Deploy Backend
-1. Push your code to GitHub
-2. Go to [vercel.com](https://vercel.com) and import your repository
-3. Set **Root Directory** to `backend`
-4. Add environment variable:
-   - `DATABASE_URL` = your cloud PostgreSQL connection string
-5. Click Deploy
-6. After deployment, run migrations:
-   ```bash
-   npx vercel env pull .env.local
-   npx prisma migrate deploy
-   npx prisma db seed
-   ```
+Create `.env` inside `backend/`:
 
-### Step 3: Deploy Frontend
-1. Import the same repository again in Vercel
-2. Set **Root Directory** to `frontend`
-3. Add environment variable:
-   - `VITE_API_URL` = `https://your-backend.vercel.app/api`
-4. Click Deploy
+```bash
+cd backend
+cp .env.example .env
+```
 
-### Alternative: Single Repository Deployment
-You can also deploy both from the root using a monorepo setup. Contact Vercel support for advanced configurations.
+Set DB URL:
 
-## Notes
+```env
+DATABASE_URL="postgresql://USER:PASSWORD@localhost:5432/calendly_clone?schema=public"
+PORT=3000
+```
 
-- The seed script creates a default user "Nawazish Hassan" which appears on the booking page.
-- The default time availability is Mon-Fri, 9 AM - 5 PM.
-- Time collision detection works across all event types for the same host.
+### Frontend
+
+Create `.env` inside `frontend/`:
+
+```bash
+cd frontend
+cp .env.example .env
+```
+
+```env
+VITE_API_URL="http://localhost:3000/api"
+```
+
+---
+
+## Database Setup (Prisma)
+
+From backend directory:
+
+```bash
+cd backend
+npx prisma generate
+npx prisma migrate dev --name init
+npx prisma db seed
+```
+
+To view DB tables:
+
+```bash
+npx prisma studio
+```
+
+---
+
+## Run Application
+
+From root directory:
+
+```bash
+npm run dev
+```
+
+Frontend:
+
+* [http://localhost:5173](http://localhost:5173)
+
+Backend:
+
+* [http://localhost:3000/api](http://localhost:3000/api)
+
+---
+
+## Deployment Guide (Recommended)
+
+### ✅ Database (Neon / Supabase)
+
+1. Create a free Postgres DB
+2. Copy connection string
+3. Use it as `DATABASE_URL` for backend
+
+---
+
+### ✅ Backend Deployment (Render / Railway recommended)
+
+Recommended platform: **Render**
+
+Build command:
+
+```bash
+npm install && npx prisma generate && npx prisma migrate deploy && npm run build
+```
+
+Start command:
+
+```bash
+npm start
+```
+
+Environment variables:
+
+* DATABASE_URL = cloud DB url
+
+---
+
+### ✅ Frontend Deployment (Vercel)
+
+Steps:
+
+1. Import repo in Vercel
+2. Set Root Directory = `frontend`
+3. Add Env Variable:
+
+```env
+VITE_API_URL=https://<your-backend-domain>/api
+```
+
+Deploy ✅
+
+---
+
+## CORS Note (Backend)
+
+Ensure backend allows frontend origin:
+
+* Local: [http://localhost:5173](http://localhost:5173)
+* Production: [https://your-frontend.vercel.app](https://your-frontend.vercel.app)
+
+---
+
+## Assumptions
+
+* No login required (default admin user assumed logged in).
+* Public booking page accessible to anyone with link.
+* Database is seeded with sample event types + meetings.
+
+---
+
+## AI Tools Usage
+
+AI tools (Antigravity / ChatGPT / Gemini) were used to speed up development.
+All code was reviewed and understood before final submission as required. 
+
+---
+
+## Submission Links
+
+* GitHub Repo: `<repo-link>`
+* Deployed Frontend: `<frontend-link>`
+* Backend API: `<backend-link>`
+
+```
+
+---
+
+If you want, I can also:
+✅ generate `vercel.json` for routing fixes (`/book/:slug` refresh 404)  
+✅ write a “Deployment Troubleshooting” section (Prisma + CORS + env errors)
+::contentReference[oaicite:3]{index=3}
+```
